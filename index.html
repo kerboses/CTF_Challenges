@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>CTF Challenge ErR0r</title>
+
+    <style>
+        *{
+            margin:0;
+            padding:0;
+            box-sizing:border-box;
+        }
+
+        body{
+            font-family: Arial, Helvetica, sans-serif;
+            background-image: url("https://images.unsplash.com/photo-1518770660439-4636190af475");
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            height:100vh;
+            display:flex;
+            justify-content:center;
+            align-items:center;
+            overflow:hidden;
+        }
+
+        /* Dark Overlay */
+        body::before{
+            content:"";
+            position:fixed;
+            inset:0;
+            background:rgba(0,0,0,.55);
+        }
+
+        /* Floating Stars */
+        .star{
+            position:absolute;
+            color:white;
+            font-size:20px;
+            animation:fall linear infinite;
+            opacity:.8;
+        }
+
+        @keyframes fall{
+            from{
+                transform:translateY(-100px) rotate(0deg);
+            }
+            to{
+                transform:translateY(110vh) rotate(360deg);
+            }
+        }
+
+        /* Main Container */
+        .container{
+            position:relative;
+            z-index:2;
+            width:420px;
+            background:rgba(0,0,0,.75);
+            color:white;
+            padding:30px;
+            border-radius:10px;
+            text-align:center;
+            box-shadow:0 0 30px rgba(0,255,0,.4);
+            animation:popup .8s;
+        }
+
+        @keyframes popup{
+            from{
+                transform:scale(.7);
+                opacity:0;
+            }
+            to{
+                transform:scale(1);
+                opacity:1;
+            }
+        }
+
+        h2{
+            color:#00ff99;
+            margin-bottom:20px;
+            animation:glow 2s infinite alternate;
+        }
+
+        @keyframes glow{
+            from{
+                text-shadow:0 0 10px #00ff99;
+            }
+            to{
+                text-shadow:0 0 20px #00ff99,
+                            0 0 40px #00ff99;
+            }
+        }
+
+        input[type=number]{
+            width:90%;
+            padding:10px;
+            font-size:18px;
+            border-radius:5px;
+            border:none;
+        }
+
+        input[type=submit]{
+            margin-top:20px;
+            width:95%;
+            padding:12px;
+            font-size:18px;
+            background:#28a745;
+            color:white;
+            border:none;
+            border-radius:5px;
+            cursor:pointer;
+            transition:.3s;
+        }
+
+        input[type=submit]:hover{
+            background:#3fd56a;
+            transform:scale(1.05);
+            box-shadow:0 0 20px lime;
+        }
+
+        /* Congratulations Popup */
+
+        #flagPopup{
+            display:none;
+            position:fixed;
+            top:50%;
+            left:50%;
+            transform:translate(-50%,-50%) scale(0);
+            background:#28a745;
+            color:white;
+            padding:30px 40px;
+            border-radius:12px;
+            font-size:28px;
+            font-weight:bold;
+            text-align:center;
+            box-shadow:0 0 20px lime,
+                       0 0 50px gold;
+            z-index:9999;
+        }
+
+        #flagPopup.show{
+            display:block;
+            animation:flagAnimation 2s forwards;
+        }
+
+        @keyframes flagAnimation{
+
+            0%{
+                transform:translate(-50%,-50%) scale(0);
+                opacity:0;
+            }
+
+            40%{
+                transform:translate(-50%,-50%) scale(1.25);
+                opacity:1;
+            }
+
+            60%{
+                transform:translate(-50%,-50%) scale(.95);
+            }
+
+            80%{
+                transform:translate(-50%,-50%) scale(1.05);
+            }
+
+            100%{
+                transform:translate(-50%,-50%) scale(1);
+                opacity:1;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+<!-- Floating Stars -->
+
+<div class="star" style="left:5%;animation-duration:8s;">★</div>
+<div class="star" style="left:15%;animation-duration:11s;">✦</div>
+<div class="star" style="left:28%;animation-duration:9s;">★</div>
+<div class="star" style="left:40%;animation-duration:12s;">✦</div>
+<div class="star" style="left:55%;animation-duration:7s;">★</div>
+<div class="star" style="left:68%;animation-duration:10s;">✦</div>
+<div class="star" style="left:80%;animation-duration:13s;">★</div>
+<div class="star" style="left:92%;animation-duration:8s;">✦</div>
+
+<div class="container">
+
+    <h2>⭐ CTF Challenge ErR0r ⭐</h2>
+
+    <form action="star.php" method="GET">
+
+        <label>Enter the number</label>
+
+        <br><br>
+
+        <input type="number" name="value" required>
+
+        <br>
+
+        <input type="submit" value="Generate">
+        <h3> Find the number to complete challenge </h3>
+         <h3> Hint: URL </h3>
+    </form>
+
+</div>
+
+<!-- Animated Congratulations Popup -->
+
+<div id="flagPopup">
+    Congratulations!<br><br>
+    You Found The Flag!
+</div>
+
+<script>
+
+document.querySelector("form").addEventListener("submit", function(e){
+
+    const value = document.querySelector('input[name="value"]').value;
+
+    if(value === "990"){
+
+        e.preventDefault();
+
+        const popup = document.getElementById("flagPopup");
+
+        popup.classList.add("show");
+
+        setTimeout(function(){
+
+            document.querySelector("form").submit();
+
+        },2000);
+
+    }
+
+});
+
+</script>
+
+</body>
+</html>
